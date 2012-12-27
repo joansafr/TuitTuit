@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pou="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>TuitTuit</title>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/bootstrap/js/bootstrap.js"></script>
+        <link href="#{facesContext.externalContext.requestContextPath}/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+    <h:body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">TuitTuit</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h:form class="bs-docs-example">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <pou:growl id="growl" />
+                </h:panelGroup>
+                <!-- Main hero unit for a primary marketing message or call to action -->
+                <div class="hero-unit" >
+                    <h1>Hola a Todos!</h1>
+                    <p>Esta es una aplicacion web hecha en lenguaje java utilizando los frameworks JSF y Primefaces. Estamos consumiento el Web Service de Twitter para obtener los ultimos 10 tuits de tus amigos.</p>
+                    <h2><h:outputText rendered="#{homeController.usuarioNombre != null}" value="¡Bienvenido #{homeController.usuarioNombre}!"></h:outputText></h2>
+                </div>
+                <div class="input-append">
+
+                    
+                    <h:commandLink rendered="#{homeController.DMReporte == null}" class="btn btn-primary" actionListener="#{homeController.confirmar()}" value="Ingresar" />
+                    <h:inputText maxlength="120" rendered="#{homeController.usuarioNombre != null}" value="#{homeController.status}"  class="span2" placeholder="Como estas?"/>
+                    <h:commandLink rendered="#{homeController.usuarioNombre != null}" class="btn btn-primary" actionListener="#{homeController.actualizarStatus()}" value="Tuit" />
+                </div>
+                <!-- Example row of columns -->
+                <div class="row">
+
+
+
+
+
+
+                    <pou:dataTable  rendered="#{homeController.DMReporte != null}" id="tableId" value="#{homeController.DMReporte}"   var="item" style="width: 95%; margin-left: auto; margin-right: auto;font-size: 11px; overflow: auto;"
+                                   widgetVar="diaTrabajoTable" emptyMessage="Por favor identificate para mostrar los tuits."
+                                    >
+                        
+                        <pou:column   >
+                            <pou:graphicImage  value="#{item.user.profileImageUrl}"/> <h:outputText value="   "/> <h:outputText value=" #{item.user.screenName}"/>
+                        </pou:column>
+                        <pou:column  >
+                            <h:outputText value="#{item.text}"/>
+                        </pou:column>
+                        <pou:column >
+                            <h:outputText value="#{item.createdAt}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                            </h:outputText>
+                        </pou:column>
+                    </pou:dataTable>
+
+                </div>
+
+            </h:form>
+
+            <footer>
+                <p>&copy; Copyright 2012 <a href="#">Antonio Salinas - Luis Muga</a>. Todos los derechos reservados.</p>
+            </footer>
+
+        </div> <!-- /container -->
+
+
+    </h:body>
+
+</html>
+
